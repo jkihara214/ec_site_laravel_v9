@@ -13,11 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', [App\Http\Controllers\ItemController::class, 'index'])->name('item');
+Route::controller(App\Http\Controllers\ItemController::class)->group(function () {
+    Route::get('/item/index', 'index')->name('item.index');
+    Route::get('/item/detail/{id}', 'detail')->name('item.detail');
+});

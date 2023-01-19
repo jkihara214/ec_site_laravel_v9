@@ -3,12 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class ItemController extends Controller
 {
     public function index ()
-    {
-        $var = 1;
-        return view('item/index', compact('var'));
-    }
+	{
+		$items = Item::all();
+		return view('item.index', compact('items'));
+	}
+
+	public function detail (int $id)
+	{
+		$item = Item::find($id);
+		if (isset($item)) {
+			return view('item.detail', compact('item'));
+		} else {
+			$items = Item::all();
+			return view('item.index', compact('items'));
+		}
+	}
 }
