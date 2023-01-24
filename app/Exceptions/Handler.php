@@ -36,6 +36,13 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
+    protected function unauthenticated($request,Throwable $exception)
+    {
+        if($request->is('admin') || $request->is('admin/*')){
+            return redirect()->guest('/admin/login');
+        }
+    }
+
     /**
      * Register the exception handling callbacks for the application.
      *
