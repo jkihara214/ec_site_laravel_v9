@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,14 @@ Route::controller(App\Http\Controllers\ItemController::class)->group(function ()
     Route::get('/item/detail/{id}', 'detail')->name('item.detail');
 });
 
-Route::view('/admin/login', 'admin/login');
-Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
-Route::post('/admin/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin.logout');
-Route::view('/admin/register', 'admin/register');
-Route::post('/admin/register', [App\Http\Controllers\Admin\RegisterController::class, 'register']);
-Route::view('/admin/home', 'admin/home')->middleware('auth:admin');
+Route::group(['prefix' => 'admin'], function() {
+    Route::view('/login', 'admin/login')->name('admin.login');
+    Route::post('/login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
+    Route::view('/register', 'admin/register')->name('admin.register');
+    Route::post('/register', [App\Http\Controllers\Admin\RegisterController::class, 'register']);
+});
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
+    Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class,'logout'])->name('admin.logout');
+    Route::view('/home', 'admin/home')->name('admin.home');
+});

@@ -38,9 +38,14 @@ class Handler extends ExceptionHandler
 
     protected function unauthenticated($request,Throwable $exception)
     {
-        if($request->is('admin') || $request->is('admin/*')){
-            return redirect()->guest('/admin/login');
+        if ($request->expectsJson()) {
+            // json形式のメッセージをレスポンス
+            return response()->json(['message' => $exception->getMessage()], 401);
         }
+        if($request->is('admin') || $request->is('admin/*')){
+            return redirect()->guest(route('admin.login'));
+        }
+        return redirect()->guest(route('login'));
     }
 
     /**
