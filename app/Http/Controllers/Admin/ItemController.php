@@ -24,4 +24,27 @@ class ItemController extends Controller
 			return view('admin.item.index', compact('items'));
 		}
 	}
+
+    public function add ()
+	{
+		return view('admin.item.add');
+	}
+
+	public function create (Request $request)
+	{
+		$request->validate([
+			'name' => ['required'],
+			'explanation' => ['required'],
+			'price' => ['required', 'regex:/^[1-9][0-9]{0,6}$/'],
+			'stock' => ['required', 'regex:/^0$|^[1-9][0-9]{0,3}$/'],
+		]);
+
+		$item = new Item;
+		$item->name = $request->name;
+		$item->explanation = $request->explanation;
+		$item->price = $request->price;
+		$item->stock = $request->stock;
+		$item->save();
+		return redirect('/admin/item/index');
+	}
 }

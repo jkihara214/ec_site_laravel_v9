@@ -39,4 +39,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
     Route::get('/item/index', [App\Http\Controllers\Admin\ItemController::class, 'index'])->name('admin.item.index');
     Route::get('/item/detail/{id}', [App\Http\Controllers\Admin\ItemController::class, 'detail'])->name('admin.item.detail');
     Route::get('/item/add', [App\Http\Controllers\Admin\ItemController::class, 'add'])->name('admin.item.add');
+    Route::post('/item/create', [App\Http\Controllers\Admin\ItemController::class, 'create'])->name('admin.item.create');
 });

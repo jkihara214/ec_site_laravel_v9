@@ -8,6 +8,7 @@
                 <div class="card-header">{{ __('商品一覧') }}</div>
 
                 <div class="card-body">
+                <a href="{{ route('admin.item.add') }}">新商品追加</a>
                 <table style="border-color:#858383 ; border-style:groove; border-width:5px ;">
                     <thead>
                         <tr>
