@@ -39,12 +39,34 @@ class ItemController extends Controller
 			'stock' => ['required', 'regex:/^0$|^[1-9][0-9]{0,3}$/'],
 		]);
 
-		$item = new Item;
-		$item->name = $request->name;
-		$item->explanation = $request->explanation;
-		$item->price = $request->price;
-		$item->stock = $request->stock;
-		$item->save();
+		$createItem = new Item;
+		$createItem->name = $request->name;
+		$createItem->explanation = $request->explanation;
+		$createItem->price = $request->price;
+		$createItem->stock = $request->stock;
+		$createItem->save();
 		return redirect('/admin/item/index');
+	}
+
+	public function edit (int $id)
+	{
+		$editItem = Item::find($id);
+		if (Item::where('id', '=', $editItem['id'])->exists()) {
+			return view('admin.item.edit', compact('item'));
+		} else {
+			return redirect('/admin/item/index');
+		}
+	}
+
+	public function update (Request $request)
+	{
+		$updateItem = Item::find($request->id);
+		if (Item::where('id', '=', $updateItem['id'])->exists()) {
+				$updateItem->name = $request->name;
+				$updateItem->explanation = $request->explanation;
+				$updateItem->stock = $request->stock;
+				$updateItem->save();
+		}
+		return redirect()->route('admin.item.detail', ['id' => $updateItem['id']]);
 	}
 }

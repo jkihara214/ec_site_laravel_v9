@@ -33,6 +33,9 @@
                 <a class="btn btn-link" href="{{ route('admin.item.index') }}">
                     {{ __('戻る') }}
                 </a>
+                <a class="btn btn-link" href="{{ route('admin.item.edit', ['id' => $item['id']]) }}">
+                    {{ __('編集') }}
+                </a>
                 </div>
             </div>
         </div>
