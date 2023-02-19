@@ -23,4 +23,10 @@ class ItemController extends Controller
 			return view('item.index', compact('items'));
 		}
 	}
+
+	public function user()
+	{
+		$items = Item::all();
+		return view('item/user')->with('items', $items);
+	}
 }

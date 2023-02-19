@@ -20,10 +20,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::controller(App\Http\Controllers\ItemController::class)->group(function () {
-    Route::get('/item/index', 'index')->name('item.index');
-    Route::get('/item/detail/{id}', 'detail')->name('item.detail');
+Route::group(['middleware' => 'auth:user'], function() {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/item/index', [App\Http\Controllers\ItemController::class, 'index'])->name('item.index');
+    Route::get('/item/detail/{id}', [App\Http\Controllers\ItemController::class, 'detail'])->name('item.detail');
+
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
+    Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/delete', [App\Http\Controllers\CartController::class, 'delete'])->name('cart.delete');
 });
 
 Route::group(['prefix' => 'admin'], function() {

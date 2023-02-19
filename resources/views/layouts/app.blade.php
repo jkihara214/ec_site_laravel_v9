@@ -58,6 +58,9 @@
                                     <a class="dropdown-item" href="{{ route('item.index') }}">
                                         {{ __('商品一覧') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('cart') }}">
+                                        {{ __('Myカート') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

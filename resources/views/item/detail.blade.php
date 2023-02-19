@@ -30,6 +30,11 @@
                         </tr>
                     </tbody>
                 </table>
+                <form class="btn btn-link" method="post" action="{{ route('cart.add') }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="item_id" value="{{ $item['id'] }}">
+                    <button type="submit">カートへ入れる</button>
+                </form>
                 <a class="btn btn-link" href="{{ route('item.index') }}">
                     {{ __('戻る') }}
                 </a>
