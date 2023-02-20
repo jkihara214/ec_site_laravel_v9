@@ -8,6 +8,9 @@
                 <div class="card-header">{{ __('カート') }}</div>
 
                 <div class="card-body">
+                <a class="btn btn-link" href="{{ route('item.index') }}">
+                    {{ __('商品追加') }}
+                </a>
                 @if (0 < count($carts))
                     <table style="border-color:#858383 ; border-style:groove; border-width:5px ;">
                         <thead>
@@ -41,12 +44,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    <a class="btn btn-link" href="{{ route('address') }}">
+                        {{ __('お届け先選択') }}
+                    </a>
                     @else
                         <p>カートに商品はありません</p>
                     @endif
-                    <a class="btn btn-link" href="{{ route('item.index') }}">
-                        {{ __('商品一覧へ') }}
-                    </a>
                 </div>
             </div>
         </div>

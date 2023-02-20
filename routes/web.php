@@ -29,6 +29,14 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
     Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/delete', [App\Http\Controllers\CartController::class, 'delete'])->name('cart.delete');
+
+    Route::get('/address', [App\Http\Controllers\AddressController::class, 'index'])->name('address');
+    Route::view('/address/register', 'address/register')->name('address.register');
+    Route::post('/address/create', [App\Http\Controllers\AddressController::class, 'create'])->name('address.create');
+    Route::get('/address/detail', [App\Http\Controllers\AddressController::class, 'detail'])->name('address.detail');
+    Route::post('/address/edit', [App\Http\Controllers\AddressController::class, 'edit'])->name('address.edit');
+    Route::post('/address/update', [App\Http\Controllers\AddressController::class, 'update'])->name('address.update');
+    Route::post('/address/delete', [App\Http\Controllers\AddressController::class, 'delete'])->name('address.delete');
 });
 
 Route::group(['prefix' => 'admin'], function() {

@@ -46,4 +46,9 @@ class User extends Authenticatable
         //リレーション 主User 従Cart
         return $this->hasMany(Cart::class);
     }
+
+    public function addresses() {
+        //リレーション 主User 従Cart
+        return $this->hasMany(Address::class);
+    }
 }

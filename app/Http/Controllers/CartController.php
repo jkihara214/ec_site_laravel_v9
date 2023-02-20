@@ -14,7 +14,7 @@ class CartController extends Controller
 {
 	public function index() {
 		$user = User::with('carts.item')
-				->find(Auth::id());
+			->find(Auth::id());
 		$carts = $user->carts;
 		$subtotals = $this->subtotals($carts);
 		$totals = $this->totals($carts);
