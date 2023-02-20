@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use App\Models\Cart;
 use App\Models\Item;
 use Exception;
@@ -12,10 +13,9 @@ use Exception;
 class CartController extends Controller
 {
 	public function index() {
-		$carts = Cart::select('carts.id', 'user_id', 'item_id', 'quantity', 'name', 'explanation', 'price')
-				->where('carts.user_id', '=', Auth::id())
-				->join('items', 'carts.item_id', '=', 'items.id')
-				->get();
+		$user = User::with('carts.item')
+				->find(Auth::id());
+		$carts = $user->carts;
 		$subtotals = $this->subtotals($carts);
 		$totals = $this->totals($carts);
 		return view('cart.index', compact('carts', 'totals', 'subtotals'));

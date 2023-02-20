@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,9 +23,13 @@ class Cart extends Model
 
     public function item() {
         //リレーション 主Item 従Cart
-        return $this->belongsTo('App\Models\Item', 'item_id', 'id');
+        return $this->belongsTo(Item::class);
     }
 
+    public function user() {
+        //リレーション 主User 従Cart
+        return $this->belongsTo(User::class);
+    }
 
     public function subtotal() {
         $result = $this->item->price * $this->quantity;

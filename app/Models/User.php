@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function carts() {
+        //リレーション 主User 従Cart
+        return $this->hasMany(Cart::class);
+    }
 }
