@@ -66,4 +66,62 @@ class AddressController extends Controller
             return redirect()->route('address');
         }
     }
+
+    public function edit(Request $request)
+    {
+        $addressId = $request->address_id;
+        $userId = $request->user_id;
+        if ($userId == Auth::id()) {
+            $address = Address::find($addressId);
+            if ($address != null) {
+                return view('address.edit',  compact('address'));
+            }
+        }
+        return view('address.detail',  compact('address'));
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'address_id' => ['required'],
+            'name' => ['required'],
+            'post_code' => ['required', 'regex:/^[0-9]{7}$/'],
+            'prefecture' => ['required'],
+            'municipalities' => ['required'],
+            'sub_address' => ['required'],
+            'phone_num' => ['required', 'regex:/^0[0-9]{9,10}$/'],
+        ]);
+
+        $addressId = $request->address_id;
+        $address = Address::find($addressId);
+        $userId = $address->user_id;
+        if ($address != null && $userId == Auth::id()) {
+            if ($validator->fails()) {
+                /// バリデーション失敗時の処理...
+                return view('address.detail',  compact('address'));
+            } else {
+                $address->name = $request->name;
+                $address->post_code = $request->post_code;
+                $address->prefecture = $request->prefecture;
+                $address->municipalities = $request->municipalities;
+                $address->subsequent_address = $request->sub_address;
+                $address->phone_num = $request->phone_num;
+                $address->save();
+                return view('address.detail',  compact('address'));
+            }
+        }
+        return redirect(route('address'));
+    }
+
+    public function delete(Request $request) {
+        $addressId = $request->address_id;
+        $userId = $request->user_id;
+        if ($userId == Auth::id()) {
+            $address = Address::find($addressId);
+            if ($address != null) {
+                $address->delete();
+            }
+        }
+        return redirect()->route('address');
+    }
 }

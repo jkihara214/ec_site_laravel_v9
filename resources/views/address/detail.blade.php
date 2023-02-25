@@ -30,6 +30,18 @@
                         </tr>
                     </tbody>
                 </table>
+                <form method="post" action="{{ route('address.edit') }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="address_id" value="{{ $address->id }}">
+                    <input type="hidden" name="user_id" value="{{ $address->user_id }}">
+                    <button type="submit">編集</button>
+                </form>
+                <form method="post" action="{{ route('address.delete') }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="address_id" value="{{ $address->id }}">
+                    <input type="hidden" name="user_id" value="{{ $address->user_id }}">
+                    <button type="submit">削除</button>
+                </form>
                 <a class="btn btn-link" href="{{ route('address') }}">
                     {{ __('戻る') }}
                 </a>
