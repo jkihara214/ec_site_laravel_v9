@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Support\Facades\Storage; 
 
 class ItemController extends Controller
 {
@@ -37,6 +38,7 @@ class ItemController extends Controller
 			'explanation' => ['required'],
 			'price' => ['required', 'regex:/^[1-9][0-9]{0,6}$/'],
 			'stock' => ['required', 'regex:/^0$|^[1-9][0-9]{0,3}$/'],
+			'image' => ['max:1024', 'nullable', 'mimes:jpg,jpeg,png,gif'],
 		]);
 
 		$createItem = new Item;
@@ -44,14 +46,18 @@ class ItemController extends Controller
 		$createItem->explanation = $request->explanation;
 		$createItem->price = $request->price;
 		$createItem->stock = $request->stock;
+		if (!empty($request->image)) {
+			$path = $request->file('image')->store('public/images/item');
+			$createItem->image = basename($path);
+		}
 		$createItem->save();
 		return redirect('/admin/item/index');
 	}
 
 	public function edit (int $id)
 	{
-		$editItem = Item::find($id);
-		if (Item::where('id', '=', $editItem['id'])->exists()) {
+		$item = Item::find($id);
+		if (Item::where('id', '=', $item['id'])->exists()) {
 			return view('admin.item.edit', compact('item'));
 		} else {
 			return redirect('/admin/item/index');
@@ -62,10 +68,18 @@ class ItemController extends Controller
 	{
 		$updateItem = Item::find($request->id);
 		if (Item::where('id', '=', $updateItem['id'])->exists()) {
-				$updateItem->name = $request->name;
-				$updateItem->explanation = $request->explanation;
-				$updateItem->stock = $request->stock;
-				$updateItem->save();
+			$updateItem->name = $request->name;
+			$updateItem->explanation = $request->explanation;
+			$updateItem->stock = $request->stock;
+			if (!empty($request->image)) {
+				$past_img = $updateItem->image;
+				Storage::delete('public/images/item/' . $past_img);
+				$image = uniqid(mt_rand(), true);
+				$image .= '.' . $request->file('image')->getClientOriginalExtension();
+				$request->file('image')->storeAs('public/images/item', $image);
+				$updateItem->image = $image;
+			}
+			$updateItem->save();
 		}
 		return redirect()->route('admin.item.detail', ['id' => $updateItem['id']]);
 	}

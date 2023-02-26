@@ -21,7 +21,7 @@
                         @foreach ($items as $item)
                             <tr>
                                 <td><a href="{{ route('admin.item.detail', ['id' => $item['id']]) }}">{{ $item['name'] }}</a></td>
-                                <td>{{ "￥" . $item['price'] }}</td>
+                                <td>{{ "￥" . number_format($item['price']) }}</td>
                                 @if ($item['stock'] > 0)
                                     <td>在庫あり</td>
                                 @else

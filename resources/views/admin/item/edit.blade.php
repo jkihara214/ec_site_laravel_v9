@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('商品情報の編集') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.item.update') }}">
+                    <form method="POST" action="{{ route('admin.item.update') }}" enctype="multipart/form-data">
                         @csrf
 
                         <input type="hidden" name="id" value="{{ $item->id }}" required>
@@ -62,6 +62,20 @@
                                 <input id="stock" type="number" class="form-control @error('stock') is-invalid @enderror" name="stock" value="{{ old('stock', $item->stock) }}" required autocomplete="stock" autofocus>
 
                                 @error('stock')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('画像') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image">
+
+                                @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
