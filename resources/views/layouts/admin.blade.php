@@ -59,9 +59,11 @@
                                     <a class="dropdown-item" href="{{ route('admin.item.index') }}">
                                         {{ __('商品一覧') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('admin.logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('admin.user.index') }}">
+                                        {{ __('会員一覧') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

@@ -49,6 +49,10 @@ Route::group(['prefix' => 'admin'], function() {
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function() {
     Route::post('/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
     Route::view('/home', 'admin/home')->name('admin.home');
+
+    Route::get('/user/index', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.user.index');
+    Route::get('/user/detail/{userId}', [App\Http\Controllers\Admin\UserController::class, 'detail'])->name('admin.user.detail');
+
     Route::get('/item/index', [App\Http\Controllers\Admin\ItemController::class, 'index'])->name('admin.item.index');
     Route::get('/item/detail/{id}', [App\Http\Controllers\Admin\ItemController::class, 'detail'])->name('admin.item.detail');
     Route::get('/item/add', [App\Http\Controllers\Admin\ItemController::class, 'add'])->name('admin.item.add');
