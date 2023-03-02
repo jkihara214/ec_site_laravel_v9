@@ -1,3 +1,7 @@
+<?php
+use App\Enums\Prefecture;
+?>
+
 @extends('layouts.admin')
 
 @section('content')
@@ -38,7 +42,7 @@
                             <tr>
                                 <td>{{ $address['name'] }}</td> 
                                 <td>〒{{ substr_replace($address['post_code'], '-', 3, 0) }}</td>
-                                <td>{{ $address['prefecture'] }}</td>
+                                <td>{{ Prefecture::getDescription($address['prefecture']) }}</td>
                                 <td>{{ $address['municipalities'] }}</td>
                                 <td>{{ $address['subsequent_address'] }}</td>
                                 <td>{{ $address['phone_num'] }}</td>

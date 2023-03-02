@@ -40,12 +40,17 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="prefecture" class="col-md-4 col-form-label text-md-end">{{ __('都道府県') }}</label>
+                            <label for="prefecture_id" class="col-md-4 col-form-label text-md-end">{{ __('都道府県') }}</label>
 
                             <div class="col-md-6">
-                                <input id="prefecture" type="text" class="form-control @error('prefecture') is-invalid @enderror" name="prefecture" value="{{ old('prefecture') }}" required autocomplete="prefecture">
+                                <select name="prefecture_id" class="form-control">
+                                    <option value="">▼ 以下から選択</option>
+                                    @foreach ($prefectures as $prefecture)
+                                        <option value="{{ $prefecture->value }}">{{ $prefecture->description }}</option>
+                                    @endforeach
+                                </select>
 
-                                @error('prefecture')
+                                @error('prefecture_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
